@@ -1,3 +1,5 @@
-void main()
-{
+#include "drivers/vga.h"
+
+void main() {
+    clear();
 }

@@ -11,7 +11,7 @@ os.img: boot/boot_sect.bin kernel.bin
 	cat $^ > $@
 
 %.o: %.c ${HEADERS}
-	gcc -ffreestanding -c $< -o $@
+	gcc -Wall -ffreestanding -I. -c $< -o $@
 
 kernel.bin: kernel/kernel_entry.o ${OBJ}
 	ld -o $@ -Ttext 0x1000 $^ --oformat binary
