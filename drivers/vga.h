@@ -11,7 +11,10 @@
 #define REG_VGA_CTLR 0x3d4
 #define REG_VGA_DATA 0x3d5
 
+void clear_screen();
+
+void put_string(char* s, unsigned int offset);
+
 void move_cursor(unsigned int offset);
-void clear();
 
 #endif

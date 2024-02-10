@@ -2,7 +2,7 @@
 
 unsigned char port_byte_in(unsigned short port) {
     unsigned char result ;
-    __asm__ ( "in %%dx, %%al" : "=a"(result) : "d"(port));
+    __asm__("in %%dx, %%al" : "=a"(result) : "d"(port));
     return result;
 }
 
@@ -17,12 +17,20 @@ void move_cursor(unsigned int offset) {
     port_byte_out(REG_VGA_DATA, offset);
 }
 
+void put_string(char *s, unsigned int offset) {
+    unsigned short* buf = (unsigned short*)VGA_BUFFER;
+    for (unsigned int i = 0; s[i]; i++, offset++) {
+        buf[offset] = s[i] | (GREEN_ON_BLACK << 8);
+    }
+
+    move_cursor(offset);
+}
+
 // clear the screen
-void clear() {
-    unsigned char* buf = (unsigned char*)VGA_BUFFER;
+void clear_screen() {
+    unsigned short* buf = (unsigned short*)VGA_BUFFER;
     for (unsigned int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
-        buf[i << 1] = GREEN_ON_BLACK;
-        buf[i << 1 | 1] = ' ';
+        buf[i] = ' ' | (GREEN_ON_BLACK << 8);
     }
 
     // move the cursor to (0, 0)
