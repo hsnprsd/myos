@@ -7,13 +7,13 @@ all: myos.img
 run: all
 	qemu-system-i386 -drive file=myos.img,if=floppy,format=raw
 
-myos.img: boot/boot_sect.bin kernel.bin
+myos.img: boot/boot_sect.bin kernel/kernel.bin
 	cat $^ > $@
 
 %.o: %.c ${HEADERS}
 	clang -g -O0 -ffreestanding -target i386 -I. -c $< -o $@
 
-kernel.bin: kernel/entry.o ${OBJ}
+kernel/kernel.bin: kernel/entry.o ${OBJ}
 	ld -o $@ -m elf_i386 -s -Ttext 0x1000 $^ --oformat binary
 
 %.bin: %.asm
@@ -23,5 +23,4 @@ kernel.bin: kernel/entry.o ${OBJ}
 	nasm $< -f elf32 -o $@
 
 clean:
-	rm -fr *.bin *.o myos.img
-	rm -fr kernel/*.o boot/*.bin drivers/*.o
+	rm -rf **/*.bin **/*.o myos.img
