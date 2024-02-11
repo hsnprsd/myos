@@ -2,9 +2,9 @@ CC = clang
 CCFLAGS = -g -O0 -ffreestanding -target i386 -Iinclude
 LD = ld
 
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
+SOURCES = $(wildcard kernel/*.c drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${SOURCES:.c=.o}
 
 all: myos.img
 
