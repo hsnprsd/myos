@@ -5,7 +5,7 @@ OBJ = ${C_SOURCES:.c=.o}
 all: os.bin
 
 run: all
-	qemu-system-i386 -fda os.bin
+	qemu-system-i386 -drive file=os.bin,format=raw
 
 os.bin: boot/boot_sect.bin kernel.bin
 	cat $^ > $@
