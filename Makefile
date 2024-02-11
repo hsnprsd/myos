@@ -1,3 +1,7 @@
+CC = clang
+CCFLAGS = -g -O0 -ffreestanding -target i386 -Iinclude
+LD = ld
+
 C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
 OBJ = ${C_SOURCES:.c=.o}
@@ -11,10 +15,10 @@ myos.img: boot/boot_sect.bin kernel/kernel.bin
 	cat $^ > $@
 
 %.o: %.c ${HEADERS}
-	clang -g -O0 -ffreestanding -target i386 -Iinclude -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 kernel/kernel.bin: kernel/entry.o ${OBJ}
-	ld -o $@ -m elf_i386 -s -Ttext 0x1000 $^ --oformat binary
+	$(LD) -o $@ -m elf_i386 -s -Ttext 0x1000 $^ --oformat binary
 
 %.bin: %.asm
 	nasm $< -f bin -I boot -o $@
