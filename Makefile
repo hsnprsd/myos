@@ -2,12 +2,12 @@ C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
-all: os.bin
+all: myos.img
 
 run: all
-	qemu-system-i386 -drive file=os.bin,format=raw
+	qemu-system-i386 -drive file=myos.img,if=floppy,format=raw
 
-os.bin: boot/boot_sect.bin kernel.bin
+myos.img: boot/boot_sect.bin kernel.bin
 	cat $^ > $@
 
 %.o: %.c ${HEADERS}
@@ -23,5 +23,5 @@ kernel.bin: kernel/entry.o ${OBJ}
 	nasm $< -f elf32 -o $@
 
 clean:
-	rm -fr *.bin *.o os.img
+	rm -fr *.bin *.o myos.img
 	rm -fr kernel/*.o boot/*.bin drivers/*.o
