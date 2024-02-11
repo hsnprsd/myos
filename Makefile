@@ -11,7 +11,7 @@ myos.img: boot/boot_sect.bin kernel/kernel.bin
 	cat $^ > $@
 
 %.o: %.c ${HEADERS}
-	clang -g -O0 -ffreestanding -target i386 -I. -c $< -o $@
+	clang -g -O0 -ffreestanding -target i386 -Iinclude -c $< -o $@
 
 kernel/kernel.bin: kernel/entry.o ${OBJ}
 	ld -o $@ -m elf_i386 -s -Ttext 0x1000 $^ --oformat binary
