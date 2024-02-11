@@ -13,7 +13,7 @@ os.bin: boot/boot_sect.bin kernel.bin
 %.o: %.c ${HEADERS}
 	clang -g -O0 -ffreestanding -target i386 -I. -c $< -o $@
 
-kernel.bin: kernel/kernel_entry.o ${OBJ}
+kernel.bin: kernel/entry.o ${OBJ}
 	ld -o $@ -m elf_i386 -s -Ttext 0x1000 $^ --oformat binary
 
 %.bin: %.asm
