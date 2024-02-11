@@ -6,15 +6,16 @@
 #define SCREEN_WIDTH  80
 #define SCREEN_HEIGHT 25
 
-#define GREEN_ON_BLACK 0x02
+#define WHITE_ON_BLACK 0x0f
+#define GREEN_ON_BLACK 0x04
 
 #define REG_VGA_CTLR 0x3d4
 #define REG_VGA_DATA 0x3d5
 
-void clear_screen();
+void clear_screen(unsigned char attr);
 
-void put_string(char* s, unsigned int offset);
+void put_string(char* s, unsigned int offset, unsigned char attr);
 
-void move_cursor(unsigned int offset);
+void set_cursor(unsigned int offset);
 
 #endif

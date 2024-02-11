@@ -2,8 +2,7 @@ CC = clang
 CCFLAGS = -g -O0 -ffreestanding -target i386 -Iinclude
 LD = ld
 
-SOURCES = $(wildcard kernel/*.c drivers/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
+SOURCES = $(wildcard kernel/*.c drivers/*.c lib/*.c)
 OBJ = ${SOURCES:.c=.o}
 
 all: myos.img
@@ -14,7 +13,7 @@ run: all
 myos.img: boot/boot_sect.bin kernel/kernel.bin
 	cat $^ > $@
 
-%.o: %.c ${HEADERS}
+%.o: %.c
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 kernel/kernel.bin: kernel/entry.o ${OBJ}

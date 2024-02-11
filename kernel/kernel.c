@@ -1,6 +1,6 @@
-#include "drivers/vga.h"
+#include "lib/log.h"
 
-void main() {
-    clear_screen();
-    put_string("Hello, World!", 0);
+void main(void) {
+    log_init();
+    log_emit(LOG_LEVEL_INFO, "hello world!");
 }
