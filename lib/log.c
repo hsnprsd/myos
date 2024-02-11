@@ -18,4 +18,6 @@ void log_emit(log_level_t level, char *s) {
     put_string("> ", offset, attr);
     put_string(s, offset + 2, attr);
     set_cursor(offset + SCREEN_WIDTH);
+
+    current_line++;
 }
